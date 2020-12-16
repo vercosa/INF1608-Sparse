@@ -10,8 +10,11 @@
 // M = (D + w*L)*(D^-1)*(D+w*U) com w > 1.0.
 
 #include <stdio.h>
+#include <math.h>
 #include "sparse.h"
 #include "matriz.h"
+#include "gradconj.h"
+
 
 double* criaVetorSolucao(int n)
 {
@@ -23,9 +26,25 @@ double* criaVetorSolucao(int n)
     return x;
 }
 
+void testa(int n, Sparse** A, double* b, double* xbarra, double* xsol) {
+  int i, iter;
+  double dif = 0.0;
+
+  iter = GradConj(n, A, b, xbarra, 10e-7);
+
+  for(i = 0; i < n; i++) {
+    //   printf("%f\n\n",xbarra[i]);
+    dif += fabs((xbarra[i] - xsol[i])/xsol[i]);
+  }
+  dif = dif / n;
+  printf("Erro: %g%%\n", dif*100);
+  printf("Iteracoes: %d\n", iter);
+  printf("\n");
+}
+
 int main ()
 {
-  int n = 6;
+  int n = 100;
   Sparse** A;
   double* x;
   double* xBarra;
@@ -46,7 +65,7 @@ int main ()
     //     printf("A[i][4].col = %d A[i][4].val= %.2f\n\n",  A[i][4].col, A[i][4].val);
     // }
   sparseMultmv(n, A, x, b);
-  printf("\n\n%f %f %f %f %f %f ", b[0],  b[1], b[2], b[3], b[4], b[5]);
-
+//   printf("%f %f %f %f %f %f \n", b[0],  b[1], b[2], b[3], b[4], b[5]);
+      testa(n, A, b, xBarra, x);
   return 0;
 }

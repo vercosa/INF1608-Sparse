@@ -42,4 +42,13 @@ void multmv (int m, int n, double** A, double* v, double* w);
 // armazenando o resultado na matriz C (m x q), previamente criada
 void multmm (int m, int n, int q, double** A, double** B, double** C);
 
+double vet_dot(int n, double* v, double* w);
+
+void vet_mults(int n, double* v, double s, double* w);
+
+void vet_soma(int n, double* a, double* b, double* c);
+
+void vet_subtrai(int n, double* a, double* b, double* c);
+
+void vet_copia(int n, double* src, double* dst);
 #endif

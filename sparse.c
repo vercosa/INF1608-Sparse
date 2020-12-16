@@ -129,6 +129,6 @@ void sparseMultmv (int n, Sparse** A, double* v, double* w)
             w[i] += A[i][j].val * v[col];
 
         }
-        printf("\n");
+        // printf("\n");
     }
 }

@@ -130,3 +130,43 @@ void multmm (int m, int n, int q, double** A, double** B, double** C)
         }
     }
 }
+
+double vet_dot(int n, double* v, double* w)
+{
+  double s = 0;
+  for (int i = 0; i < n; i++) {
+    s += v[i] * w[i];
+  }
+  return s;
+}
+
+void vet_mults(int n, double* v, double s, double* w)
+{
+  int i;
+  for (i = 0; i < n; i++) {
+    w[i] = s * v[i];
+  }
+}
+
+void vet_soma(int n, double* a, double* b, double* c)
+{
+  int i;
+  for (i = 0; i < n; i++) {
+    c[i] = a[i] + b[i];
+  }
+}
+
+void vet_subtrai(int n, double* a, double* b, double* c)
+{
+  int i;
+  for (i = 0; i < n; i++) {
+    c[i] = a[i] - b[i];
+  }
+}
+
+void vet_copia(int n, double* src, double* dst) {
+  int i;
+  for (i = 0; i < n; i++) {
+    dst[i] = src[i];
+  }
+}
