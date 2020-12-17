@@ -32,10 +32,9 @@ void testa(int n, Sparse** A, double* b, double* xbarra, double* xsol) {
 
   iter = GradConj(n, A, b, xbarra, 10e-7);
 
-  for(i = 0; i < n; i++) {
-    //   printf("%f\n\n",xbarra[i]);
+  for(i = 0; i < n; i++)
     dif += fabs((xbarra[i] - xsol[i])/xsol[i]);
-  }
+    
   dif = dif / n;
   printf("Erro: %g%%\n", dif*100);
   printf("Iteracoes: %d\n", iter);
@@ -55,17 +54,8 @@ int main ()
   x = criaVetorSolucao(n);
   b = criavet(n);
   xBarra = criavet(n);
-  
-    // for (int i = 0; i < n; i++)
-    // {
-    //       printf("i = %d --- A[i][0].col = %d A[i][0].val= %.2f\n", i, A[i][0].col, A[i][0].val);
-    //     printf("A[i][1].col = %d A[i][1].val= %.2f\n",A[i][1].col, A[i][1].val);
-    //     printf("A[i][2].col = %d A[i][2].val= %.2f\n",  A[i][2].col, A[i][2].val);
-    //     printf("A[i][3].col = %d A[i][3].val= %.2f\n",  A[i][3].col, A[i][3].val);
-    //     printf("A[i][4].col = %d A[i][4].val= %.2f\n\n",  A[i][4].col, A[i][4].val);
-    // }
   sparseMultmv(n, A, x, b);
-//   printf("%f %f %f %f %f %f \n", b[0],  b[1], b[2], b[3], b[4], b[5]);
-      testa(n, A, b, xBarra, x);
+  testa(n, A, b, xBarra, x);
+  
   return 0;
 }

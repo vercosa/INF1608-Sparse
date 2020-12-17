@@ -9,9 +9,8 @@ Sparse** sparseCria(int n)
 
   for (int i = 0; i < n; i++)
   {
-    // A[i] = malloc(sizeof(Sparse));
-    A[i] = malloc(sizeof(Sparse) * 5);
-    // A[i][0].col = -1;
+    A[i] = malloc(sizeof(Sparse));
+    A[i][0].col = -1;
     
   }
 
@@ -24,7 +23,7 @@ Sparse** criaMatrizA(int n)
     
     for (int i = 0; i < n; i++)
     {
-        // A[i] = malloc(sizeof(Sparse) * 5);
+        A[i] = malloc(sizeof(Sparse) * 5);
         
         A[i][0].col = i;
         A[i][0].val = i+1;
@@ -107,7 +106,6 @@ void sparseMultmv (int n, Sparse** A, double* v, double* w)
             
             if (col == -1)
                 break;
-            // printf("(i, j) = (%d, %d)\n col = %d\n",i ,j, col );    
 
             if (j == 0 && col > 0)
             {
@@ -115,7 +113,6 @@ void sparseMultmv (int n, Sparse** A, double* v, double* w)
                 int k = col-1;
                 while (k >= 0)
                 {
-                    // printf(" i = %d   k = %d\n",i, k);
                     // k vai ser a linha da matriz superior
                     for(int p = 0; p < 5; p++)
                     {
@@ -129,6 +126,5 @@ void sparseMultmv (int n, Sparse** A, double* v, double* w)
             w[i] += A[i][j].val * v[col];
 
         }
-        // printf("\n");
     }
 }
