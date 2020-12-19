@@ -76,16 +76,20 @@ Sparse** precondSsor(int n, Sparse** A, double* b, double w)
     Sparse** Mb;
     Sparse** Minv;
     
-    for(i = 0; i < n; i++) {
+    for(i = 0; i < n; i++) 
+    {
         M1[i] = malloc(sizeof(Sparse) * n);
         
         M1[i][0].col = i;
         M1[i][0].val = sparseGet(i, i, A);
         
         k = 1;
-        for(j = 0; j < n; j++) {
+        for(j = 0; j < n; j++) 
+        {
             if(A[i][j].col == -1) break;
-            if(A[i][j].col < i) {
+
+            if(A[i][j].col < i) 
+            {
                 M1[i][k].col = A[i][j].col;
                 M1[i][k].val = A[i][j].val * w;
                 k++;
@@ -104,16 +108,20 @@ Sparse** precondSsor(int n, Sparse** A, double* b, double w)
         M2[i][1].col = -1;
     }
     
-    for(i = 0; i < n; i++) {
+    for(i = 0; i < n; i++) 
+    {
         M3[i] = malloc(sizeof(Sparse) * n);
         
         M3[i][0].col = i;
         M3[i][0].val = sparseGet(i, i, A);
         
         k = 1;
-        for(j = 0; j < n; j++) {
+        for(j = 0; j < n; j++) 
+        {
             if(A[i][j].col == -1) break;
-            if(A[i][j].col > i) {
+
+            if(A[i][j].col > i) 
+            {
                 M3[i][k].col = A[i][j].col;
                 M3[i][k].val = A[i][j].val * w;
                 k++;
@@ -155,9 +163,12 @@ Sparse** precondGauss(int n, Sparse** A, double* b)
         M1[i][0].val = sparseGet(i, i, A);
         
         k = 1;
-        for(j = 0; j < n; j++) {
+        for(j = 0; j < n; j++) 
+        {
             if(A[i][j].col == -1) break;
-            if(A[i][j].col < i) {
+
+            if(A[i][j].col < i) 
+            {
                 M1[i][k].col = A[i][j].col;
                 M1[i][k].val = A[i][j].val;
                 k++;
@@ -167,7 +178,8 @@ Sparse** precondGauss(int n, Sparse** A, double* b)
         M1[i][k].col = -1;
     }
     
-    for(i = 0; i < n; i++) {
+    for(i = 0; i < n; i++) 
+    {
         M2[i] = malloc(sizeof(Sparse) * 2);
         
         M2[i][0].col = i;
@@ -176,15 +188,18 @@ Sparse** precondGauss(int n, Sparse** A, double* b)
         M2[i][1].col = -1;
     }
     
-    for(i = 0; i < n; i++) {
+    for(i = 0; i < n; i++) 
+    {
         M3[i] = malloc(sizeof(Sparse) * n);
         
         M3[i][0].col = i;
         M3[i][0].val = sparseGet(i, i, A);
         
         k = 1;
-        for(j = 0; j < n; j++) {
+        for(j = 0; j < n; j++) 
+        {
             if(A[i][j].col == -1) break;
+            
             if(A[i][j].col > i) {
                 M3[i][k].col = A[i][j].col;
                 M3[i][k].val = A[i][j].val ;
