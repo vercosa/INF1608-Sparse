@@ -134,7 +134,7 @@ Sparse** precondSsor(int n, Sparse** A, double* b, double w)
     
     return C;
 }
-Sparse** precond_Gauss(int n, Sparse** A, double* b)
+Sparse** precondGauss(int n, Sparse** A, double* b)
 {
      int i, j, k;
     

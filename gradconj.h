@@ -3,4 +3,4 @@ int GradConj (int n, Sparse** A, double* b, double* x, double tol);
 
 Sparse** precondSsor(int n, Sparse** A, double* b, double w);
 
-Sparse** precond_Gauss(int n, Sparse** A, double* b);
+Sparse** precondGauss(int n, Sparse** A, double* b);
