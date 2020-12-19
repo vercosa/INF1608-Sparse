@@ -142,7 +142,7 @@ double sparseGet(int i, int j, Sparse** A) {
 Sparse** sparseMultm(int n, Sparse** A, Sparse** B) {
   int i, j, k, m;
   double num;
-  Sparse** C = sparse_cria(n);
+  Sparse** C = sparseCria(n);
 
   for (i = 0; i < n; i++) {
     m = 0;

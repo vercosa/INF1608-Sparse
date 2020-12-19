@@ -62,16 +62,16 @@ int GradConj (int n, Sparse** A, double* b, double* x, double tol)
     return count;
 }
 
-Sparse** precond_ssor(int n, Sparse** A, double* b, double w)
+Sparse** precondSsor(int n, Sparse** A, double* b, double w)
 {
      int i, j, k;
     
     double* b_ = criavet(n);
     
     Sparse** C;
-    Sparse** M1 = sparse_cria(n);
-    Sparse** M2 = sparse_cria(n);
-    Sparse** M3 = sparse_cria(n);
+    Sparse** M1 = sparseCria(n);
+    Sparse** M2 = sparseCria(n);
+    Sparse** M3 = sparseCria(n);
     Sparse** Ma;
     Sparse** Mb;
     Sparse** Minv;
@@ -116,6 +116,78 @@ Sparse** precond_ssor(int n, Sparse** A, double* b, double w)
             if(A[i][j].col > i) {
                 M3[i][k].col = A[i][j].col;
                 M3[i][k].val = A[i][j].val * w;
+                k++;
+            }
+        }
+        
+        M3[i][k].col = -1;
+    }
+    
+    Ma = sparseMultm(n, M1, M2);
+    Mb = sparseMultm(n, Ma, M3);
+    Minv = Mb;
+    
+    C = sparseMultm(n, Minv, A);
+    
+    sparseMultmv(n, Minv, b, b_);
+    vet_copia(n, b_, b);
+    
+    return C;
+}
+Sparse** precond_Gauss(int n, Sparse** A, double* b)
+{
+     int i, j, k;
+    
+    double* b_ = criavet(n);
+    
+    Sparse** C;
+    Sparse** M1 = sparseCria(n);
+    Sparse** M2 = sparseCria(n);
+    Sparse** M3 = sparseCria(n);
+    Sparse** Ma;
+    Sparse** Mb;
+    Sparse** Minv;
+    
+    for(i = 0; i < n; i++) {
+        M1[i] = malloc(sizeof(Sparse) * n);
+        
+        M1[i][0].col = i;
+        M1[i][0].val = sparseGet(i, i, A);
+        
+        k = 1;
+        for(j = 0; j < n; j++) {
+            if(A[i][j].col == -1) break;
+            if(A[i][j].col < i) {
+                M1[i][k].col = A[i][j].col;
+                M1[i][k].val = A[i][j].val;
+                k++;
+            }
+        }
+        
+        M1[i][k].col = -1;
+    }
+    
+    for(i = 0; i < n; i++) {
+        M2[i] = malloc(sizeof(Sparse) * 2);
+        
+        M2[i][0].col = i;
+        M2[i][0].val = 1.0/sparseGet(i, i, A);
+        
+        M2[i][1].col = -1;
+    }
+    
+    for(i = 0; i < n; i++) {
+        M3[i] = malloc(sizeof(Sparse) * n);
+        
+        M3[i][0].col = i;
+        M3[i][0].val = sparseGet(i, i, A);
+        
+        k = 1;
+        for(j = 0; j < n; j++) {
+            if(A[i][j].col == -1) break;
+            if(A[i][j].col > i) {
+                M3[i][k].col = A[i][j].col;
+                M3[i][k].val = A[i][j].val ;
                 k++;
             }
         }
