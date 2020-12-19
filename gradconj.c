@@ -1,6 +1,7 @@
 #include "matriz.h"
 #include "sparse.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int GradConj (int n, Sparse** A, double* b, double* x, double tol)
 {
@@ -122,11 +123,11 @@ Sparse** precond_ssor(int n, Sparse** A, double* b, double w)
         M3[i][k].col = -1;
     }
     
-    Ma = sparseMultmv(n, M1, M2,b_);
-    Mb = sparseMultmv(n, Ma, M3,b_);
+    Ma = sparseMultm(n, M1, M2);
+    Mb = sparseMultm(n, Ma, M3);
     Minv = Mb;
     
-    C = sparseMultmv(n, Minv, A,b_);
+    C = sparseMultm(n, Minv, A);
     
     sparseMultmv(n, Minv, b, b_);
     vet_copia(n, b_, b);

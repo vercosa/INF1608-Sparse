@@ -139,3 +139,30 @@ double sparseGet(int i, int j, Sparse** A) {
   }
   return 0;
 }
+Sparse** sparseMultm(int n, Sparse** A, Sparse** B) {
+  int i, j, k, m;
+  double num;
+  Sparse** C = sparse_cria(n);
+
+  for (i = 0; i < n; i++) {
+    m = 0;
+    C[i] = malloc(sizeof(Sparse) * (n+1));
+    for (k = 0; k < n; k++) {
+      num = 0.0;
+
+      for (j = 0; j < n; j++) {
+        if(A[i][j].col == -1) break;
+        num += A[i][j].val * sparseGet(A[i][j].col, k, B);
+      }
+
+      if(num != 0) {
+        C[i][m].col = k;
+        C[i][m].val = num;
+        m++;
+      }
+    }
+    C[i][m].col = -1;
+  }
+
+  return C;
+}
