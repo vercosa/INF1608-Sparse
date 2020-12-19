@@ -128,3 +128,14 @@ void sparseMultmv (int n, Sparse** A, double* v, double* w)
         }
     }
 }
+double sparseGet(int i, int j, Sparse** A) {
+  int k = 0;
+
+  while(A[i][k].col != -1) {
+    if(A[i][k].col == j) {
+      return A[i][k].val;
+    }
+    k++;
+  }
+  return 0;
+}
